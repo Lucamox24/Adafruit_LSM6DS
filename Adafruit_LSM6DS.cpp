@@ -431,6 +431,38 @@ void Adafruit_LSM6DS::setGyroRange(lsm6ds_gyro_range_t new_range) {
 }
 
 /**************************************************************************/
+/*
+write any register
+*/
+void Adafruit_LSM6DS::writeRegister(uint8_t address, uint8_t value) {
+
+    Adafruit_BusIO_Register thisreg = Adafruit_BusIO_Register(
+      i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, address);
+
+  Adafruit_BusIO_RegisterBits regbits =
+      Adafruit_BusIO_RegisterBits(&thisreg, 8, 0);
+
+  regbits.write(value);
+
+}
+
+/**************************************************************************/
+/*
+read any register
+*/
+uint8_t Adafruit_LSM6DS::readRegister(uint8_t address) {
+uint8_t regread;
+    Adafruit_BusIO_Register thisreg = Adafruit_BusIO_Register(
+      i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, address);
+
+  Adafruit_BusIO_RegisterBits regbits =
+      Adafruit_BusIO_RegisterBits(&thisreg, 8, 0);
+
+  regread = (uint8_t)regbits.read();
+  return regread;
+}
+
+/**************************************************************************/
 /*!
     @brief Enables the high pass filter and/or slope filter
     @param filter_enabled Whether to enable the slope filter (see datasheet)

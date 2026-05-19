@@ -29,6 +29,8 @@
 #define LSM6DS_CTRL1_XL 0x10       ///< Main accelerometer config register
 #define LSM6DS_CTRL2_G 0x11        ///< Main gyro config register
 #define LSM6DS_CTRL3_C 0x12        ///< Main configuration register
+#define LSM6DS_CTRL6_C 0x15
+#define LSM6DS_CTRL7_C 0x16
 #define LSM6DS_CTRL8_XL 0x17       ///< High and low pass for accel
 #define LSM6DS_CTRL10_C 0x19       ///< Main configuration register
 #define LSM6DS_WAKEUP_SRC 0x1B     ///< Why we woke up
@@ -56,7 +58,7 @@ typedef enum data_rate {
   LSM6DS_RATE_833_HZ,
   LSM6DS_RATE_1_66K_HZ,
   LSM6DS_RATE_3_33K_HZ,
-  LSM6DS_RATE_6_66K_HZ,
+  LSM6DS_RATE_6_66K_HZ
 } lsm6ds_data_rate_t;
 
 /** The accelerometer data range */
@@ -165,6 +167,10 @@ public:
 
   lsm6ds_gyro_range_t getGyroRange(void);
   void setGyroRange(lsm6ds_gyro_range_t new_range);
+
+  uint8_t readRegister(uint8_t address);
+
+  void writeRegister(uint8_t address, uint8_t value);
 
   void reset(void);
   void configIntOutputs(bool active_low, bool open_drain);
